@@ -1,4 +1,4 @@
-import Image from "next/image";
+import Image from "next/image"
 
 export default function Home() {
   return (
@@ -20,7 +20,7 @@ export default function Home() {
             </code>
             .
           </li>
-          <li>Save and see your changes instantly.</li>
+          <li>Hello World</li>
         </ol>
 
         <div className="flex gap-4 items-center flex-col sm:flex-row">
@@ -97,5 +97,5 @@ export default function Home() {
         </a>
       </footer>
     </div>
-  );
+  )
 }
