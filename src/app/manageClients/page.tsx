@@ -6,12 +6,22 @@ import ManageClientsTitles from "@/components/myComp/manageClientsPage/ManageCli
 import ManageClientH3Title from "@/components/myComp/manageClientsPage/ManageClientH3Title";
 import ManageClientAddClientForm from "@/components/myComp/manageClientsPage/ManageClientAddClientForm";
 import { rubikFont } from "@/types/font";
+import { fetchAllDocuments } from "@/service/firebaseService";
+import { log } from "console";
+import { useClientContext } from "@/context/ClientContext";
 
 function ManageClients() {
-  const [clients, setClients] = useState<Client[]>([]);
+  const { clients, fetchClients } = useClientContext();
   useEffect(() => {
-    
-  });
+    fetchAllDocuments("clients")
+      .then((data) => {
+        console.log(data);
+        fetchClients();
+      })
+      .catch((error) => {
+        console.error("Error getting documents: ", error);
+      });
+  }, []);
   return (
     <main className="mt-16 flex flex-col items-center justify-center px-6">
       <ManageClientsTitles />

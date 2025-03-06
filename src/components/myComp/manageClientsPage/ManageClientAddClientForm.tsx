@@ -7,11 +7,13 @@ import ManageClientFormInput from "./ManageClientFormInput";
 import { createDocument } from "@/service/firebaseService";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { formSchema } from "@/types/formSchema"
-
+import { formSchema } from "@/types/formSchema";
+import { useClientContext } from "@/context/ClientContext";
+import { Client } from "@/types/Client";
 
 function ManageClientAddClientForm() {
   const [showLoading, setLoading] = useState(false);
+  const { addClient } = useClientContext();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -30,13 +32,13 @@ function ManageClientAddClientForm() {
   async function onSubmit(values: z.infer<typeof formSchema>) {
     setLoading(true);
     try {
-      await handleAddClient();
+      await addClient(form.getValues() as Client);
+      showToast(form.getValues().name);
       form.reset();
     } catch (error) {
       console.error("Error adding document: ", error);
     } finally {
       setLoading(false);
-      showToast();
     }
   }
 
@@ -44,12 +46,10 @@ function ManageClientAddClientForm() {
     await createDocument("clients", form.getValues());
   }
 
-  function showToast() {
-    console.log("showing toast");
-
-    toast("הלקוח התווסף בהצלחה 😊", {
+  function showToast(name: string) {
+    toast(`${name} התווסף בהצלחה 😊`, {
       action: {
-        label: "Undo",
+        label: "סגור",
         onClick: () => console.log("Undo"),
       },
     });
