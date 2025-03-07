@@ -23,24 +23,25 @@ function ManageClients() {
       });
   }, []);
   return (
-    <main className="mt-16 flex flex-col items-center justify-center px-6">
+    <main className="mt-16 flex w-full flex-col items-center justify-center gap-8 px-6 lg:items-start">
       <ManageClientsTitles />
-
-      <div className="mt-10 w-full rounded-3xl bg-gray-100 px-6 py-6 lg:w-4/6">
-        <ManageClientH3Title title="הוספת לקוח חדש" />
-        <ManageClientAddClientForm />
-      </div>
-      <div className="mt-6 w-full rounded-3xl bg-gray-100 px-6 py-6 lg:w-4/6">
-        <ManageClientH3Title title="לקוחות קיימים" />
-        {clients.length === 0 ? (
-          <p
-            className={`${rubikFont.className} font-bold text-balance text-red-500`}
-          >
-            אין עדיין לקוחות 🥹, כדאי להוסיף
-          </p>
-        ) : (
-          <ClientCollapse client={clients} />
-        )}
+      <div className="flex h-fit w-full flex-col gap-4 lg:flex-row lg:items-start lg:justify-start">
+        <div className="mt-2 w-full rounded-3xl bg-gray-100 px-6 py-6 lg:mt-0">
+          <ManageClientH3Title title="הוספת לקוח חדש" />
+          <ManageClientAddClientForm />
+        </div>
+        <div className="mt-6 mb-16 h-fit w-full rounded-3xl bg-gray-100 px-6 py-6 lg:mt-0">
+          <ManageClientH3Title title="לקוחות קיימים" />
+          {clients.length === 0 ? (
+            <p
+              className={`${rubikFont.className} font-bold text-balance text-red-500`}
+            >
+              אין עדיין לקוחות 🥹, כדאי להוסיף
+            </p>
+          ) : (
+            <ClientCollapse client={clients} />
+          )}
+        </div>
       </div>
     </main>
   );

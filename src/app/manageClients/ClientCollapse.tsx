@@ -29,6 +29,7 @@ function ClientCollapse({ client }: ClientCollapseProps) {
   const [loadingStates, setLoadingStates] = useState<{
     [key: string]: boolean;
   }>({});
+  const [openIndex, setOpenIndex] = useState<number | null>(null);
 
   const handleDelete = async (clientId: string, name: string) => {
     setLoadingStates((prev) => ({ ...prev, [clientId]: true }));
@@ -51,55 +52,76 @@ function ClientCollapse({ client }: ClientCollapseProps) {
     });
   }
 
+  const handleToggle = (index: number) => {
+    setOpenIndex(openIndex === index ? null : index);
+  };
+
   return client.map((client, index) => (
     <div key={index} className="border-b-2 py-3">
-      <Collapsible>
+      <Collapsible
+        open={openIndex === index}
+        onOpenChange={() => handleToggle(index)}
+      >
         <CollapsibleTrigger
-          className={`${rubikFont.className} text-xl font-bold`}
+          className={`${rubikFont.className} text-xl font-bold ${
+            openIndex === index ? "text-indigo-500" : ""
+          }`}
         >
           {client.name}
         </CollapsibleTrigger>
-        <CollapsibleContent>
+        <CollapsibleContent
+          className={`transition-max-height overflow-hidden duration-300 ease-in-out ${
+            openIndex === index ? "max-h-screen" : "max-h-0"
+          }`}
+        >
           <ul className="mt-3 flex flex-col items-end">
             <ClientCollapseDetails
               Icon={FaFacebook}
-              platform="פייסבוק"
+              platform="facebook"
               data={client.facebook ?? "אין קישור, ניתן להוסיף"}
+              clientId={client.id}
             />
             <ClientCollapseDetails
               Icon={FaInstagram}
-              platform="אינסטגרם"
+              platform="instagram"
               data={client.instagram ?? "אין קישור, ניתן להוסיף"}
+              clientId={client.id}
             />
             <ClientCollapseDetails
               Icon={FaLinkedin}
-              platform="לינקדין"
+              platform="linkedin"
               data={client.linkedin ?? "אין קישור, ניתן להוסיף"}
+              clientId={client.id}
             />
             <ClientCollapseDetails
               Icon={FaTiktok}
-              platform="טיקטוק"
+              platform="tiktok"
               data={client.tiktok ?? "אין קישור, ניתן להוסיף"}
+              clientId={client.id}
             />
             <ClientCollapseDetails
               Icon={FaTwitter}
-              platform="אקס"
+              platform="twitter"
               data={client.twitter ?? ""}
+              clientId={client.id}
             />
             <ClientCollapseDetails
               Icon={FaWhatsapp}
-              platform="וואטסאפ"
+              platform="whatsapp"
               data={client.whatsapp ?? "אין קישור, ניתן להוסיף"}
+              clientId={client.id}
             />
             <ClientCollapseDetails
               Icon={FaYoutube}
-              platform="יוטיוב"
+              platform="youtube"
               data={client.youtube ?? "אין קישור, ניתן להוסיף"}
+              clientId={client.id}
             />
             <ClientCollapseDetails
               Icon={FaReact}
-              platform="אתר"
+              platform="website"
               data={client.website ?? "אין קישור, ניתן להוסיף"}
+              clientId={client.id}
             />
             <button
               onClick={() => handleDelete(client.id, client.name)}

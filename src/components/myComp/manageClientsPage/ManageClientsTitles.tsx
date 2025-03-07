@@ -3,7 +3,7 @@ import React from "react";
 
 function ManageClientsTitles() {
   return (
-    <div className="mb-4 w-full">
+    <div className="w-full">
       <h1
         className={`text-right text-6xl font-black text-balance ${rubikFont.className} text-center text-gray-100`}
       >

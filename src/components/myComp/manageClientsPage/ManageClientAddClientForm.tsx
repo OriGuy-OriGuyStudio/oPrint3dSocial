@@ -104,7 +104,7 @@ function ManageClientAddClientForm() {
           name="website"
         />
         <Button
-          className={`flex w-full items-center justify-center rounded-lg bg-indigo-500 px-4 py-2 text-gray-100 shadow-md shadow-indigo-300 ${rubikFont.className} font-extrabold`}
+          className={`mt-4 flex w-full items-center justify-center rounded-lg bg-indigo-500 px-4 py-2 text-gray-100 shadow-md shadow-indigo-300 ${rubikFont.className} font-extrabold`}
           type="submit"
         >
           {showLoading ? "מעלה לקוח לשרת..." : "הוסף לקוח"}

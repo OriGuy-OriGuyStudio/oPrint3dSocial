@@ -12,6 +12,7 @@ import {
   createDocument,
   deleteDocument,
   updateDocument,
+  getClientById, // Import the new function
 } from "@/service/firebaseService";
 
 interface ClientContextProps {
@@ -25,6 +26,7 @@ interface ClientContextProps {
     collection: string,
     newValue: string,
   ) => void;
+  getClient: (clientId: string) => Promise<Client | null>; // Add method signature
 }
 
 const ClientContext = createContext<ClientContextProps | undefined>(undefined);
@@ -81,13 +83,30 @@ export const ClientProvider = ({ children }: { children: ReactNode }) => {
     }
   };
 
+  const getClient = async (clientId: string): Promise<Client | null> => {
+    try {
+      const client = await getClientById("clients", clientId);
+      return client as Client;
+    } catch (error) {
+      console.error("Error fetching client by ID: ", error);
+      return null;
+    }
+  };
+
   useEffect(() => {
     fetchClients();
   }, []);
 
   return (
     <ClientContext.Provider
-      value={{ clients, fetchClients, addClient, deleteClient, updateClient }}
+      value={{
+        clients,
+        fetchClients,
+        addClient,
+        deleteClient,
+        updateClient,
+        getClient,
+      }}
     >
       {children}
     </ClientContext.Provider>

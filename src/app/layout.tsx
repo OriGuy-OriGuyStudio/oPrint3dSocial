@@ -24,7 +24,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html dir="rtl" lang="en">
+    <html dir="rtl" lang="he">
       <ClientProvider>
         <body className={`bg-[#3a3a3a] antialiased`}>{children}</body>
       </ClientProvider>
