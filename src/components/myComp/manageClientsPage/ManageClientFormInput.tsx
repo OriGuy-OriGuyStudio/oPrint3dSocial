@@ -12,21 +12,22 @@ import React from "react";
 import { Control, UseFormReturn } from "react-hook-form";
 
 interface ManageClientFormInputProps {
-  control?:
-    | Control<{
-        name: string;
-        facebook?: string | undefined;
-        instagram?: string | undefined;
-        twitter?: string | undefined;
-        linkedin?: string | undefined;
-        whatsapp?: string | undefined;
-        tiktok?: string | undefined;
-        youtube?: string | undefined;
-        website?: string | undefined;
-      }>
-    | undefined;
+  control: Control<
+    {
+      name: string;
+      facebook?: string | undefined;
+      instagram?: string | undefined;
+      twitter?: string | undefined;
+      linkedin?: string | undefined;
+      whatsapp?: string | undefined;
+      tiktok?: string | undefined;
+      youtube?: string | undefined;
+      website?: string | undefined;
+    },
+    undefined
+  >;
   label: string;
-  name: keyof Client;
+  name: "name" | "facebook" | "instagram" | "twitter" | "linkedin" | "whatsapp" | "tiktok" | "youtube" | "website";
 }
 
 function ManageClientFormInput({
@@ -37,7 +38,7 @@ function ManageClientFormInput({
   return (
     <FormField
       control={control}
-      name={name}
+      name={name }
       render={({ field }) => (
         <FormItem className="">
           <FormLabel className={` ${rubikFont.className} text-gray-950`}>
