@@ -104,7 +104,7 @@ function ClientProtfolio() {
           לחצו והצטרפו לעמודים הרשמיים שלי!
         </h2>
 
-        <ul className="mt-8 grid grid-cols-2 gap-3 border-2 pl-2">
+        <ul className="mt-8 flex flex-row flex-wrap items-center justify-center gap-3 pl-2">
           {client &&
             Object.entries(client)
               .sort(([keyA], [keyB]) => {
@@ -122,12 +122,12 @@ function ClientProtfolio() {
               )
               .map(([key, value], index) => (
                 <li
-                  className={`${rubikFont.className} w-full`}
+                  className={`${rubikFont.className} w-[40%]`}
                   key={`${key}-${index}`}
                 >
                   {iconMapping[key] && (
-                    <button className="w-full rounded-md bg-[#202020]">
-                      <span className="block w-full -translate-x-2 -translate-y-2 items-center justify-center rounded-md border-black bg-[#3521AB] px-4 py-2 text-xl transition-all hover:-translate-y-3 active:translate-x-0 active:translate-y-0">
+                    <button className="w-[100%] rounded-md bg-[#202020]">
+                      <span className="block w-[100%] -translate-x-2 -translate-y-2 items-center justify-center rounded-md border-black bg-[#3521AB] px-4 py-2 text-xl transition-all hover:-translate-y-3 active:translate-x-0 active:translate-y-0">
                         <a
                           target="_blank"
                           href={value}
