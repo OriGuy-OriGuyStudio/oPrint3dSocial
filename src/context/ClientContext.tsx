@@ -6,7 +6,6 @@ import React, {
   useEffect,
   ReactNode,
 } from "react";
-import { useRouter } from "next/router";
 import { Client } from "@/types/Client";
 import {
   fetchAllDocuments,
@@ -16,6 +15,7 @@ import {
   getClientById,
 } from "@/service/firebaseService";
 import CustomModal from "@/components/myComp/manageClientsPage/CustonModal";
+import { useRouter } from "next/navigation"
 
 interface ClientContextProps {
   clients: Client[];
