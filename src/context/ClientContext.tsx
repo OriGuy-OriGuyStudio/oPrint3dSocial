@@ -6,6 +6,7 @@ import React, {
   useEffect,
   ReactNode,
 } from "react";
+import { useRouter } from "next/navigation";
 import { Client } from "@/types/Client";
 import {
   fetchAllDocuments,
@@ -15,7 +16,6 @@ import {
   getClientById,
 } from "@/service/firebaseService";
 import CustomModal from "@/components/myComp/manageClientsPage/CustonModal";
-import { useRouter } from "next/navigation"
 
 interface ClientContextProps {
   clients: Client[];
@@ -29,14 +29,6 @@ interface ClientContextProps {
     newValue: string,
   ) => void;
   getClient: (clientId: string) => Promise<Client | null>;
-}
-
-interface CustomModalProps {
-  isOpen: boolean;
-  onClose: () => void;
-  url: string;
-  copy: boolean;
-  setCopy: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const ClientContext = createContext<ClientContextProps | undefined>(undefined);
@@ -119,7 +111,7 @@ export const ClientProvider = ({ children }: { children: ReactNode }) => {
 
   useEffect(() => {
     fetchClients();
-    if (checkUserLoggedIn()) {
+    if (typeof window !== "undefined" && checkUserLoggedIn()) {
       router.push("/manageClients");
     }
   }, []);
