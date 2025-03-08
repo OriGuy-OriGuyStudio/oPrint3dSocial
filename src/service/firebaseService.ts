@@ -1,6 +1,7 @@
 import { app, db } from "@/config/firebaseConfig";
 import { Client } from "@/types/Client";
 import { getApp } from "firebase/app";
+import { getAuth, signOut as firebaseSignOut } from "firebase/auth";
 import {
   collection,
   addDoc,
@@ -94,5 +95,14 @@ export const getClientById = async (collection: string, clientId: string) => {
   } catch (error) {
     console.error("Error fetching document: ", error);
     throw error;
+  }
+};
+export const signOut = async () => {
+  const auth = getAuth();
+  try {
+    await firebaseSignOut(auth);
+    console.log("Signed out successfully");
+  } catch (error) {
+    console.error("Error signing out: ", error);
   }
 };

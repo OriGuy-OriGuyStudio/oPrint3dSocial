@@ -1,38 +1,36 @@
 "use client";
 
-import { auth } from "@/config/firebaseConfig";
-import { signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 import { Rubik } from "next/font/google";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
+import { auth } from "@/config/firebaseConfig";
+import { signInWithEmailAndPassword } from "firebase/auth";
+
 const rubikFont = Rubik({
   variable: "--font-rubik",
   subsets: ["hebrew", "latin"],
 });
+
 export default function Home() {
   const router = useRouter();
-  const provider = new GoogleAuthProvider();
-  auth.languageCode = "he";
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
   async function handleSignIn() {
-    await signInWithPopup(auth, provider)
-      .then((result) => {
-        // This gives you a Google Access Token. You can use it to access the Google API.
-        const credential = GoogleAuthProvider.credentialFromResult(result);
-        const token = credential?.accessToken;
-        // The signed-in user info.
-        const user = result.user;
-        // IdP data available using getAdditionalUserInfo(result)
+    await signInWithEmailAndPassword(auth, email, password)
+      .then((userCredential) => {
+        // Signed in
+        const user = userCredential.user;
+        alert("Sign-in successful!");
+        // Redirect to the desired page
         router.push("/manageClients");
-        // ...
       })
       .catch((error) => {
         // Handle Errors here.
         const errorCode = error.code;
         const errorMessage = error.message;
-        // The email of the user's account used.
-        const email = error.customData.email;
-        // The AuthCredential type that was used.
-        const credential = GoogleAuthProvider.credentialFromError(error);
-        // ...
+        console.error(errorCode, errorMessage);
+        alert("Error signing in: " + errorMessage);
       });
   }
 
@@ -48,14 +46,28 @@ export default function Home() {
           <h2
             className={`text-ms font-normal ${rubikFont.className} mb-6 text-center text-gray-500`}
           >
-            לחץ על התחבר עם גוגל על מנת להיכנס לפאנל הניהול
+            לחץ על התחבר עם דוא"ל על מנת להיכנס לפאנל הניהול
           </h2>
+          <input
+            type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            placeholder="דואר אלקטרוני"
+            className={`mb-4 rounded border p-2 ${rubikFont.className}`}
+          />
+          <input
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            placeholder="סיסמה"
+            className={`mb-4 rounded border p-2 ${rubikFont.className}`}
+          />
           <button
             className={`flex items-center justify-center rounded-lg bg-indigo-500 px-4 py-2 text-gray-100 shadow-md shadow-indigo-300 ${rubikFont.className} font-extrabold`}
             onClick={handleSignIn}
             type="button"
           >
-            <p>התחבר עם גוגל</p>
+            <p>התחבר עם דוא"ל וסיסמה</p>
           </button>
         </div>
       </main>
