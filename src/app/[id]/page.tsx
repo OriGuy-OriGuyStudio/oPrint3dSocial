@@ -86,7 +86,7 @@ function ClientProtfolio() {
     return (
       <div className="flex min-h-screen items-center justify-center">
         <p
-          className={`${rubikFont.className} text-3xl font-black text-gray-100`}
+          className={`${rubikFont.className} text-3xl font-black text-gray-800`}
         >
           טוען...
         </p>
@@ -96,7 +96,7 @@ function ClientProtfolio() {
 
   return (
     <div
-      className={`bg-opacity-50 custom-overlay relative min-h-screen content-center bg-cover bg-center px-3 bg-blend-overlay`}
+      className={`custom-overlay relative min-h-screen content-center bg-cover bg-center px-3 bg-blend-overlay`}
       style={{
         backgroundColor: client?.color || "black",
       }}
