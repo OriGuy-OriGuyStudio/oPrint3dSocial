@@ -6,16 +6,15 @@ import React, {
   useEffect,
   ReactNode,
 } from "react";
+import { useRouter } from "next/router";
 import { Client } from "@/types/Client";
 import {
   fetchAllDocuments,
   createDocument,
   deleteDocument,
   updateDocument,
-  getClientById, // Import the new function
+  getClientById,
 } from "@/service/firebaseService";
-import { rubikFont } from "@/types/font";
-import { Users } from "lucide-react";
 import CustomModal from "@/components/myComp/manageClientsPage/CustonModal";
 
 interface ClientContextProps {
@@ -29,8 +28,9 @@ interface ClientContextProps {
     collection: string,
     newValue: string,
   ) => void;
-  getClient: (clientId: string) => Promise<Client | null>; // Add method signature
+  getClient: (clientId: string) => Promise<Client | null>;
 }
+
 interface CustomModalProps {
   isOpen: boolean;
   onClose: () => void;
@@ -54,6 +54,7 @@ export const ClientProvider = ({ children }: { children: ReactNode }) => {
   const [modalOpen, setModalOpen] = useState(false);
   const [modalUrl, setModalUrl] = useState("");
   const [copy, setCopy] = useState(false);
+  const router = useRouter();
 
   const fetchClients = async () => {
     try {
@@ -110,8 +111,17 @@ export const ClientProvider = ({ children }: { children: ReactNode }) => {
     }
   };
 
+  const checkUserLoggedIn = () => {
+    // Replace this with your actual authentication check logic
+    const user = localStorage.getItem("user");
+    return user !== null;
+  };
+
   useEffect(() => {
     fetchClients();
+    if (checkUserLoggedIn()) {
+      router.push("/manageClients");
+    }
   }, []);
 
   return (
