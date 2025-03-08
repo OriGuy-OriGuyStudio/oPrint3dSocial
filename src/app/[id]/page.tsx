@@ -1,9 +1,9 @@
 "use client";
+import React, { JSX, useEffect, useLayoutEffect, useState } from "react";
+import { useParams } from "next/navigation";
 import { useClientContext } from "@/context/ClientContext";
 import { Client } from "@/types/Client";
 import { rubikFont } from "@/types/font";
-import { useParams } from "next/navigation";
-import React, { JSX, useEffect, useLayoutEffect, useState } from "react";
 import {
   FaFacebook,
   FaInstagram,
@@ -88,7 +88,7 @@ function ClientProtfolio() {
 
   return (
     <div
-      className={`mx-6 min-h-screen content-center items-center justify-center`}
+      className={`mx-3 min-h-screen content-center`}
       style={{ backgroundColor: client?.color || "black" }}
     >
       <main className="rounded-3xl bg-gray-100 px-3 py-6 shadow-xl">
@@ -103,48 +103,47 @@ function ClientProtfolio() {
         >
           לחצו והצטרפו לעמודים הרשמיים שלי!
         </h2>
-        <div className="w-full">
-          <ul className="mt-8 flex flex-row flex-wrap justify-center gap-4 pl-2">
-            {client &&
-              Object.entries(client)
-                .sort(([keyA], [keyB]) => {
-                  const order = ["facebook", "instagram", "tiktok"];
-                  const indexA = order.indexOf(keyA);
-                  const indexB = order.indexOf(keyB);
-                  if (indexA === -1 && indexB === -1) return 0;
-                  if (indexA === -1) return 1;
-                  if (indexB === -1) return -1;
-                  return indexA - indexB;
-                })
-                .map(([key, value], index) => {
-                  return value === "" || key === "name" ? (
-                    <></>
-                  ) : (
-                    <li
-                      className={`${rubikFont.className}`}
-                      key={`${key}-${index}`}
-                    >
-                      {iconMapping[key] && (
-                        <button className="w-[165px] items-center justify-center rounded-md bg-[#202020]">
-                          <span className="block w-[165px] -translate-x-2 -translate-y-2 items-center justify-center rounded-md border-2 border-black bg-[#3521AB] px-4 py-2 text-xl transition-all hover:-translate-y-3 active:translate-x-0 active:translate-y-0">
-                            <a
-                              target="_blank"
-                              href={value}
-                              className="flex items-center gap-4"
-                            >
-                              {iconMapping[key].icon}
-                              <span className="text-gray-100 capitalize">
-                                {iconMapping[key].label}
-                              </span>
-                            </a>
-                          </span>
-                        </button>
-                      )}
-                    </li>
-                  );
-                })}
-          </ul>
-        </div>
+
+        <ul className="mt-8 grid grid-cols-1 gap-x-4 gap-y-4 pl-2">
+          {client &&
+            Object.entries(client)
+              .sort(([keyA], [keyB]) => {
+                const order = ["facebook", "instagram", "tiktok"];
+                const indexA = order.indexOf(keyA);
+                const indexB = order.indexOf(keyB);
+                if (indexA === -1 && indexB === -1) return 0;
+                if (indexA === -1) return 1;
+                if (indexB === -1) return -1;
+                return indexA - indexB;
+              })
+              .map(([key, value], index) => {
+                return value === "" || key === "name" ? (
+                  <></>
+                ) : (
+                  <li
+                    className={`${rubikFont.className} last:mr-0`}
+                    key={`${key}-${index}`}
+                  >
+                    {iconMapping[key] && (
+                      <button className="w-full items-center justify-center rounded-md bg-[#202020]">
+                        <span className="block w-full -translate-x-2 -translate-y-2 items-center justify-center rounded-md border-black bg-[#3521AB] px-4 py-2 text-xl transition-all hover:-translate-y-3 active:translate-x-0 active:translate-y-0">
+                          <a
+                            target="_blank"
+                            href={value}
+                            className="flex flex-row items-center gap-4"
+                          >
+                            {iconMapping[key].icon}
+                            <span className="text-gray-100 capitalize">
+                              {iconMapping[key].label}
+                            </span>
+                          </a>
+                        </span>
+                      </button>
+                    )}
+                  </li>
+                );
+              })}
+        </ul>
       </main>
     </div>
   );
