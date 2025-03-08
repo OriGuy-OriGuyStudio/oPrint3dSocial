@@ -37,7 +37,7 @@ function ManageClients() {
     };
 
     fetchData();
-  }, [fetchClients, router]);
+  }, [router]);
 
   const handleSignOut = () => {
     signOut()
