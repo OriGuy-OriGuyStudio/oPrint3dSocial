@@ -37,14 +37,14 @@ function ClientProtfolio() {
       });
   }, []);
 
-  useEffect(() => {
-    if (client?.color) {
-      document.body.style.backgroundColor = client.color;
-      document.body.style.transition = "background-color 0.5s";
-      // Temporarily remove overflow: hidden to see if it affects the background color change
-      // document.body.style.overflow = "hidden";
-    }
-  }, [client]);
+  //   useEffect(() => {
+  //     if (client?.color) {
+  //       document.body.style.backgroundColor = client.color;
+  //       document.body.style.transition = "background-color 0.5s";
+  //       // Temporarily remove overflow: hidden to see if it affects the background color change
+  //       // document.body.style.overflow = "hidden";
+  //     }
+  //   }, [client]);
 
   const iconMapping: { [key: string]: { icon: JSX.Element; label: string } } = {
     facebook: {

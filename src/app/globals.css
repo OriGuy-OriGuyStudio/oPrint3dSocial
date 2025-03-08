@@ -135,6 +135,12 @@
   z-index: 0;
 }
 
+html,
+body {
+  background-color: #202020; /* Default background color */
+  transition: background-color 0.5s;
+}
+
 @layer base {
   * {
     @apply border-border outline-ring/50;
