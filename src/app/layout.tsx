@@ -26,7 +26,17 @@ export default function RootLayout({
   return (
     <html dir="rtl" lang="he">
       <ClientProvider>
-        <body className={`bg-[#3a3a3a] antialiased`}>{children}</body>
+        <body
+          className={`antialiased`}
+          //   style={{
+          //     backgroundImage: `url('/overlay.svg')`,
+          //     backgroundSize: "cover",
+          //     backgroundBlendMode: "overlay",
+          //     backgroundPosition: "center",
+          //   }}
+        >
+          {children}
+        </body>
       </ClientProvider>
     </html>
   );

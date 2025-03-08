@@ -96,8 +96,10 @@ function ClientProtfolio() {
 
   return (
     <div
-      className={`mx-3 min-h-screen content-center`}
-      style={{ backgroundColor: client?.color || "black" }}
+      className={`bg-opacity-50 custom-overlay relative min-h-screen content-center bg-cover bg-center px-3 bg-blend-overlay`}
+      style={{
+        backgroundColor: client?.color || "black",
+      }}
     >
       <main className="rounded-3xl bg-gray-100 px-3 py-6 shadow-xl">
         <h1
