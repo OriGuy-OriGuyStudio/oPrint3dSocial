@@ -115,22 +115,13 @@ function ClientProtfolio() {
         <ul className="mt-8 flex flex-row flex-wrap items-center justify-center gap-3 pl-2">
           {client &&
             Object.entries(client)
-              .sort(([keyA], [keyB]) => {
-                const order = ["facebook", "instagram", "tiktok"];
-                const indexA = order.indexOf(keyA);
-                const indexB = order.indexOf(keyB);
-                if (indexA === -1 && indexB === -1) return 0;
-                if (indexA === -1) return 1;
-                if (indexB === -1) return -1;
-                return indexA - indexB;
-              })
               .filter(
                 ([key, value]) =>
                   value !== "" && key !== "name" && key !== "color",
               )
               .map(([key, value], index) => (
                 <li
-                  className={`${rubikFont.className} w-[40%]`}
+                  className={`${rubikFont.className} w-[48%]`}
                   key={`${key}-${index}`}
                 >
                   {iconMapping[key] && (
