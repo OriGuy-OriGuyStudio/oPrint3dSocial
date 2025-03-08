@@ -104,7 +104,7 @@ function ClientProtfolio() {
           לחצו והצטרפו לעמודים הרשמיים שלי!
         </h2>
 
-        <ul className="mt-8 grid grid-cols-1 gap-x-4 gap-y-4 pl-2">
+        <ul className="mt-8 grid grid-cols-2 gap-3 border-2 pl-2">
           {client &&
             Object.entries(client)
               .sort(([keyA], [keyB]) => {
@@ -116,33 +116,33 @@ function ClientProtfolio() {
                 if (indexB === -1) return -1;
                 return indexA - indexB;
               })
-              .map(([key, value], index) => {
-                return value === "" || key === "name" ? (
-                  <></>
-                ) : (
-                  <li
-                    className={`${rubikFont.className} last:mr-0`}
-                    key={`${key}-${index}`}
-                  >
-                    {iconMapping[key] && (
-                      <button className="w-full items-center justify-center rounded-md bg-[#202020]">
-                        <span className="block w-full -translate-x-2 -translate-y-2 items-center justify-center rounded-md border-black bg-[#3521AB] px-4 py-2 text-xl transition-all hover:-translate-y-3 active:translate-x-0 active:translate-y-0">
-                          <a
-                            target="_blank"
-                            href={value}
-                            className="flex flex-row items-center gap-4"
-                          >
-                            {iconMapping[key].icon}
-                            <span className="text-gray-100 capitalize">
-                              {iconMapping[key].label}
-                            </span>
-                          </a>
-                        </span>
-                      </button>
-                    )}
-                  </li>
-                );
-              })}
+              .filter(
+                ([key, value]) =>
+                  value !== "" && key !== "name" && key !== "color",
+              )
+              .map(([key, value], index) => (
+                <li
+                  className={`${rubikFont.className} w-full`}
+                  key={`${key}-${index}`}
+                >
+                  {iconMapping[key] && (
+                    <button className="w-full rounded-md bg-[#202020]">
+                      <span className="block w-full -translate-x-2 -translate-y-2 items-center justify-center rounded-md border-black bg-[#3521AB] px-4 py-2 text-xl transition-all hover:-translate-y-3 active:translate-x-0 active:translate-y-0">
+                        <a
+                          target="_blank"
+                          href={value}
+                          className="flex flex-row items-center gap-4"
+                        >
+                          {iconMapping[key].icon}
+                          <span className="text-gray-100 capitalize">
+                            {iconMapping[key].label}
+                          </span>
+                        </a>
+                      </span>
+                    </button>
+                  )}
+                </li>
+              ))}
         </ul>
       </main>
     </div>
