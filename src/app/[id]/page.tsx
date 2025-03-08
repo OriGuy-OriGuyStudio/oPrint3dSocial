@@ -14,6 +14,7 @@ import {
   FaReact,
   FaTwitter,
 } from "react-icons/fa";
+import { doc } from "firebase/firestore";
 
 function ClientProtfolio() {
   const params = useParams<{ id: string }>();
@@ -26,6 +27,9 @@ function ClientProtfolio() {
       .then((data) => {
         setClient(data);
         setLoading(false);
+        console.log(data?.color);
+
+        document.body.style.backgroundColor = data?.color || "#202020";
       })
       .catch((error) => {
         console.error("Error getting client: ", error);
@@ -33,9 +37,13 @@ function ClientProtfolio() {
       });
   }, []);
 
-  useLayoutEffect(() => {
+  useEffect(() => {
+    console.log(client?.name);
     if (client?.color) {
       document.body.style.backgroundColor = client.color;
+      document.body.style.transition = "background-color 0.5s";
+      // Temporarily remove overflow: hidden to see if it affects the background color change
+      // document.body.style.overflow = "hidden";
     }
   }, [client]);
 
