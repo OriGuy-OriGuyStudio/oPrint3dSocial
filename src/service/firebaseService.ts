@@ -17,6 +17,7 @@ export const createDocument = async (collectionName: string, data: object) => {
   try {
     const docRef = await addDoc(collection(db, collectionName), data);
     console.log("Document written with ID: ", docRef.id);
+    return docRef.id;
   } catch (error) {
     console.error("Error adding document: ", error);
   }

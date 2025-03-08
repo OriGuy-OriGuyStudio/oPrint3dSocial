@@ -14,6 +14,9 @@ import {
   updateDocument,
   getClientById, // Import the new function
 } from "@/service/firebaseService";
+import { rubikFont } from "@/types/font";
+import { Users } from "lucide-react";
+import CustomModal from "@/components/myComp/manageClientsPage/CustonModal";
 
 interface ClientContextProps {
   clients: Client[];
@@ -28,6 +31,13 @@ interface ClientContextProps {
   ) => void;
   getClient: (clientId: string) => Promise<Client | null>; // Add method signature
 }
+interface CustomModalProps {
+  isOpen: boolean;
+  onClose: () => void;
+  url: string;
+  copy: boolean;
+  setCopy: React.Dispatch<React.SetStateAction<boolean>>;
+}
 
 const ClientContext = createContext<ClientContextProps | undefined>(undefined);
 
@@ -41,6 +51,9 @@ export const useClientContext = () => {
 
 export const ClientProvider = ({ children }: { children: ReactNode }) => {
   const [clients, setClients] = useState<Client[]>([]);
+  const [modalOpen, setModalOpen] = useState(true);
+  const [modalUrl, setModalUrl] = useState("");
+  const [copy, setCopy] = useState(false);
 
   const fetchClients = async () => {
     try {
@@ -53,8 +66,12 @@ export const ClientProvider = ({ children }: { children: ReactNode }) => {
 
   const addClient = async (client: Client) => {
     try {
-      await createDocument("clients", client);
+      const newId = await createDocument("clients", client);
       fetchClients();
+      const url = `${window.location.origin}/${newId}`;
+      setModalUrl(url);
+      setModalOpen(true);
+      return newId;
     } catch (error) {
       console.error("Error adding client: ", error);
     }
@@ -109,6 +126,16 @@ export const ClientProvider = ({ children }: { children: ReactNode }) => {
       }}
     >
       {children}
+      <CustomModal
+        isOpen={modalOpen}
+        onClose={() => {
+          setModalOpen(false);
+          setCopy(false);
+        }}
+        url={modalUrl}
+        copy={copy}
+        setCopy={setCopy}
+      />
     </ClientContext.Provider>
   );
 };
