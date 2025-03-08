@@ -23,7 +23,7 @@ function ManageClients() {
       });
   }, []);
   return (
-    <main className="mt-16 flex w-full flex-col items-center justify-center gap-8 px-6 lg:items-start">
+    <main className="mt-16 flex w-full flex-col items-center justify-center gap-8 bg-[#3a3a3a] px-6 lg:items-start">
       <ManageClientsTitles />
       <div className="flex h-fit w-full flex-col gap-4 lg:flex-row lg:items-start lg:justify-start">
         <div className="mt-2 w-full rounded-3xl bg-gray-100 px-6 py-6 lg:mt-0">

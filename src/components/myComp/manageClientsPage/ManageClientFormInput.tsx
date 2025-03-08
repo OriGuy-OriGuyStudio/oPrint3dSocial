@@ -23,22 +23,38 @@ interface ManageClientFormInputProps {
       tiktok?: string | undefined;
       youtube?: string | undefined;
       website?: string | undefined;
+      color?: string | undefined;
+      type?: string | undefined;
+      url?: string | undefined;
     },
     undefined
   >;
   label: string;
-  name: "name" | "facebook" | "instagram" | "twitter" | "linkedin" | "whatsapp" | "tiktok" | "youtube" | "website";
+  name:
+    | "name"
+    | "facebook"
+    | "instagram"
+    | "twitter"
+    | "linkedin"
+    | "whatsapp"
+    | "tiktok"
+    | "youtube"
+    | "website"
+    | "color"
+    | "url";
+  type?: string;
 }
 
 function ManageClientFormInput({
   control,
   label,
   name,
+  type,
 }: ManageClientFormInputProps) {
   return (
     <FormField
       control={control}
-      name={name }
+      name={name}
       render={({ field }) => (
         <FormItem className="">
           <FormLabel className={` ${rubikFont.className} text-gray-950`}>
@@ -50,6 +66,7 @@ function ManageClientFormInput({
               placeholder={label}
               {...field}
               onFocus={() => {}}
+              type={type === "color" ? "color" : "text"}
             />
           </FormControl>
           <FormMessage />

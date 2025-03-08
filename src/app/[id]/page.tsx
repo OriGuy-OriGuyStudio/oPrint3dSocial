@@ -3,7 +3,7 @@ import { useClientContext } from "@/context/ClientContext";
 import { Client } from "@/types/Client";
 import { rubikFont } from "@/types/font";
 import { useParams } from "next/navigation";
-import React, { JSX, useEffect, useState } from "react";
+import React, { JSX, useEffect, useLayoutEffect, useState } from "react";
 import {
   FaFacebook,
   FaInstagram,
@@ -19,16 +19,26 @@ function ClientProtfolio() {
   const params = useParams<{ id: string }>();
   const { getClient } = useClientContext();
   const [client, setClient] = useState<Client | null>(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     getClient(params.id)
       .then((data) => {
         setClient(data);
+        setLoading(false);
       })
       .catch((error) => {
         console.error("Error getting client: ", error);
+        setLoading(false);
       });
   }, []);
+
+  useLayoutEffect(() => {
+    if (client?.color) {
+      document.body.style.backgroundColor = client.color;
+    }
+  }, [client]);
+
   const iconMapping: { [key: string]: { icon: JSX.Element; label: string } } = {
     facebook: {
       icon: <FaFacebook className="text-[#F55274]" size={32} />,
@@ -64,11 +74,26 @@ function ClientProtfolio() {
     },
   };
 
+  if (loading) {
+    return (
+      <div className="flex min-h-screen items-center justify-center">
+        <p
+          className={`${rubikFont.className} text-3xl font-black text-gray-100`}
+        >
+          טוען...
+        </p>
+      </div>
+    );
+  }
+
   return (
-    <div className="mx-6 min-h-screen content-center items-center justify-center">
-      <main className="rounded-3xl bg-gray-100 px-6 py-3">
+    <div
+      className={`mx-6 min-h-screen content-center items-center justify-center`}
+      style={{ backgroundColor: client?.color || "black" }}
+    >
+      <main className="rounded-3xl bg-gray-100 px-3 py-6 shadow-xl">
         <h1
-          className={`${rubikFont.className} text-center text-5xl font-black`}
+          className={`${rubikFont.className} text-center text-4xl font-black`}
         >
           עמודי הסושיאל של{" "}
           <span className="text-[#3521AB]">{client?.name}</span>
@@ -78,8 +103,8 @@ function ClientProtfolio() {
         >
           לחצו והצטרפו לעמודים הרשמיים שלי!
         </h2>
-        <div>
-          <ul className="mt-8 flex flex-row flex-wrap gap-4">
+        <div className="w-full">
+          <ul className="mt-8 flex flex-row flex-wrap justify-center gap-4 pl-2">
             {client &&
               Object.entries(client)
                 .sort(([keyA], [keyB]) => {
@@ -91,15 +116,22 @@ function ClientProtfolio() {
                   if (indexB === -1) return -1;
                   return indexA - indexB;
                 })
-                .map(([key, value]) => {
+                .map(([key, value], index) => {
                   return value === "" || key === "name" ? (
                     <></>
                   ) : (
-                    <li className={`${rubikFont.className}`} key={key}>
+                    <li
+                      className={`${rubikFont.className}`}
+                      key={`${key}-${index}`}
+                    >
                       {iconMapping[key] && (
-                        <button className="w-fit items-center justify-center rounded-md bg-[#202020] align-middle">
-                          <span className="block w-fit -translate-x-2 -translate-y-2 items-center justify-center rounded-md border-2 border-black bg-[#3521AB] px-4 py-2 text-xl transition-all hover:-translate-y-3 active:translate-x-0 active:translate-y-0">
-                            <a href={value} className="flex items-center gap-4">
+                        <button className="w-[165px] items-center justify-center rounded-md bg-[#202020]">
+                          <span className="block w-[165px] -translate-x-2 -translate-y-2 items-center justify-center rounded-md border-2 border-black bg-[#3521AB] px-4 py-2 text-xl transition-all hover:-translate-y-3 active:translate-x-0 active:translate-y-0">
+                            <a
+                              target="_blank"
+                              href={value}
+                              className="flex items-center gap-4"
+                            >
                               {iconMapping[key].icon}
                               <span className="text-gray-100 capitalize">
                                 {iconMapping[key].label}

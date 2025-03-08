@@ -51,7 +51,7 @@ export const useClientContext = () => {
 
 export const ClientProvider = ({ children }: { children: ReactNode }) => {
   const [clients, setClients] = useState<Client[]>([]);
-  const [modalOpen, setModalOpen] = useState(true);
+  const [modalOpen, setModalOpen] = useState(false);
   const [modalUrl, setModalUrl] = useState("");
   const [copy, setCopy] = useState(false);
 

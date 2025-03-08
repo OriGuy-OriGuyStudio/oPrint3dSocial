@@ -1,5 +1,4 @@
 import { z } from "zod";
-import { Client } from "./Client";
 
 export const formSchema = z.object({
   name: z
@@ -65,4 +64,5 @@ export const formSchema = z.object({
     })
     .optional()
     .or(z.string()),
+  color: z.string().optional(),
 });

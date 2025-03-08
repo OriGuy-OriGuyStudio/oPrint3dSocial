@@ -26,6 +26,7 @@ function ManageClientAddClientForm() {
       tiktok: "",
       youtube: "",
       website: "",
+      color: "#3a3a3a", // Default color value
     },
   });
 
@@ -102,6 +103,12 @@ function ManageClientAddClientForm() {
           control={form.control}
           label="אתר"
           name="website"
+        />
+        <ManageClientFormInput
+          control={form.control}
+          label="צבע"
+          name="color"
+          type="color"
         />
         <Button
           className={`mt-4 flex w-full items-center justify-center rounded-lg bg-indigo-500 px-4 py-2 text-gray-100 shadow-md shadow-indigo-300 ${rubikFont.className} font-extrabold`}

@@ -9,4 +9,6 @@ export interface Client {
   tiktok?: string;
   youtube?: string;
   website?: string;
+  color?: string;
+  url?: string;
 }

@@ -16,6 +16,8 @@ import {
   FaYoutube,
   FaReact,
   FaTwitter,
+  FaBrush,
+  FaLink,
 } from "react-icons/fa";
 import { toast, Toaster } from "sonner";
 import { useClientContext } from "@/context/ClientContext";
@@ -51,6 +53,14 @@ function ClientCollapse({ client }: ClientCollapseProps) {
       },
     });
   }
+  function showCopyToast() {
+    toast(`הלינק הועתק בהצלחה `, {
+      action: {
+        label: "סגור",
+        onClick: () => console.log("Undo"),
+      },
+    });
+  }
 
   const handleToggle = (index: number) => {
     setOpenIndex(openIndex === index ? null : index);
@@ -78,51 +88,110 @@ function ClientCollapse({ client }: ClientCollapseProps) {
             <ClientCollapseDetails
               Icon={FaFacebook}
               platform="facebook"
-              data={client.facebook ?? "אין קישור, ניתן להוסיף"}
+              data={
+                client.facebook === ""
+                  ? "אין קישור, ניתן להוסיף"
+                  : (client.facebook as string)
+              }
               clientId={client.id}
             />
             <ClientCollapseDetails
               Icon={FaInstagram}
               platform="instagram"
-              data={client.instagram ?? "אין קישור, ניתן להוסיף"}
+              data={
+                client.instagram === ""
+                  ? "אין קישור, ניתן להוסיף"
+                  : (client.instagram as string)
+              }
               clientId={client.id}
             />
             <ClientCollapseDetails
               Icon={FaLinkedin}
               platform="linkedin"
-              data={client.linkedin ?? "אין קישור, ניתן להוסיף"}
+              data={
+                client.linkedin === ""
+                  ? "אין קישור, ניתן להוסיף"
+                  : (client.linkedin as string)
+              }
               clientId={client.id}
             />
             <ClientCollapseDetails
               Icon={FaTiktok}
               platform="tiktok"
-              data={client.tiktok ?? "אין קישור, ניתן להוסיף"}
+              data={
+                client.tiktok === ""
+                  ? "אין קישור, ניתן להוסיף"
+                  : (client.tiktok as string)
+              }
               clientId={client.id}
             />
             <ClientCollapseDetails
               Icon={FaTwitter}
               platform="twitter"
-              data={client.twitter ?? ""}
+              data={
+                client.twitter === ""
+                  ? "אין קישור, ניתן להוסיף"
+                  : (client.twitter as string)
+              }
               clientId={client.id}
             />
             <ClientCollapseDetails
               Icon={FaWhatsapp}
               platform="whatsapp"
-              data={client.whatsapp ?? "אין קישור, ניתן להוסיף"}
+              data={
+                client.whatsapp === ""
+                  ? "אין קישור, ניתן להוסיף"
+                  : (client.whatsapp as string)
+              }
               clientId={client.id}
             />
             <ClientCollapseDetails
               Icon={FaYoutube}
               platform="youtube"
-              data={client.youtube ?? "אין קישור, ניתן להוסיף"}
+              data={
+                client.youtube === ""
+                  ? "אין קישור, ניתן להוסיף"
+                  : (client.youtube as string)
+              }
               clientId={client.id}
             />
             <ClientCollapseDetails
               Icon={FaReact}
               platform="website"
-              data={client.website ?? "אין קישור, ניתן להוסיף"}
+              data={
+                client.website === ""
+                  ? "אין קישור, ניתן להוסיף"
+                  : (client.website as string)
+              }
               clientId={client.id}
             />
+            <ClientCollapseDetails
+              Icon={FaBrush}
+              platform="color"
+              data={
+                client.color === ""
+                  ? "אין קישור, ניתן להוסיף"
+                  : (client.color as string)
+              }
+              clientId={client.id}
+            />
+            <div
+              onClick={() => {
+                navigator.clipboard.writeText(
+                  `${window.location.origin}/${client.id}`,
+                );
+                showCopyToast();
+              }}
+              className="cursor-pointer"
+            >
+              <ClientCollapseDetails
+                Icon={FaLink}
+                platform="url"
+                data={`${window.location.origin}/${client.id}`}
+                clientId={client.id}
+              />
+            </div>
+
             <button
               onClick={() => handleDelete(client.id, client.name)}
               className={`mt-4 rounded-lg bg-red-500 px-3 py-2 font-black text-gray-100 ${rubikFont.className}`}
