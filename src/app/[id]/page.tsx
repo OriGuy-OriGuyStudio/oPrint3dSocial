@@ -38,7 +38,6 @@ function ClientProtfolio() {
   }, []);
 
   useEffect(() => {
-    console.log(client?.name);
     if (client?.color) {
       document.body.style.backgroundColor = client.color;
       document.body.style.transition = "background-color 0.5s";
