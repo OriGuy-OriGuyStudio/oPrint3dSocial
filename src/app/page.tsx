@@ -4,7 +4,7 @@ import { Rubik } from "next/font/google";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { auth } from "@/config/firebaseConfig";
-import { signInWithEmailAndPassword } from "firebase/auth";
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 
 const rubikFont = Rubik({
   variable: "--font-rubik",
@@ -17,6 +17,10 @@ export default function Home() {
   const [password, setPassword] = useState("");
 
   async function handleSignIn() {
+    const auth = getAuth();
+    if (auth.currentUser) {
+      router.push("/manageClients");
+    }
     await signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         // Signed in
