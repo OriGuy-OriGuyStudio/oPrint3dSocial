@@ -51,7 +51,7 @@ function ManageClients() {
   };
 
   return (
-    <main className="mt-16 flex w-full flex-col items-center justify-center gap-8 bg-[#3a3a3a] px-6 lg:items-start">
+    <main className="mt-16 flex w-full flex-col items-center justify-center gap-8 px-6 lg:items-start">
       <ManageClientsTitles />
       <button
         onClick={handleSignOut}
