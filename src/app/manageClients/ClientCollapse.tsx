@@ -212,7 +212,7 @@ function ClientCollapse({ client }: ClientCollapseProps) {
                 );
                 showCopyToast();
               }}
-              className="cursor-pointer"
+              className="w-full cursor-pointer"
             >
               <ClientCollapseDetails
                 Icon={FaLink}
