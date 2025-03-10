@@ -1,6 +1,7 @@
 import { useClientContext } from "@/context/ClientContext";
 import { rubikFont } from "@/types/font";
-import React, { useRef, useState } from "react";
+import { log } from "console";
+import React, { useEffect, useRef, useState } from "react";
 import { FaEdit, FaTrash } from "react-icons/fa";
 import { IconType } from "react-icons/lib";
 
@@ -19,7 +20,9 @@ function ClientCollapseDetails({
 }: ClientCollapseDetailsProps) {
   const { updateClient } = useClientContext();
   const [color, setColor] = useState(data);
-
+  useEffect(() => {
+    console.log("color: ", color);
+  }, []);
   const handleEdit = async (platform: string, newUrl: string) => {
     try {
       updateClient(clientId, platform, "clients", newUrl);
@@ -54,18 +57,27 @@ function ClientCollapseDetails({
         platform === "textAndIconColor" ||
         platform === "headerColor" ||
         platform === "buttonColor" ? (
-          <input
-            type="color"
-            value={color}
-            onChange={(event) => setColor(event.target.value)}
-            onBlur={async () => {
-              await handleEdit(platform, color);
-              if (colorInputRef.current) {
-                colorInputRef.current.blur();
-              }
-            }}
-            className="h-6 w-8 rounded-2xl border-0 border-none p-0"
-          />
+          <div className="flex flex-col items-end">
+            <label className="text-sm font-medium text-gray-700">
+              {platform === "color" && "צבע רקע"}
+              {platform === "textAndIconColor" &&
+                "צבע טקסט ואייקון של הכפתורים"}
+              {platform === "headerColor" && "צבע כותרות"}
+              {platform === "buttonColor" && "צבע כפתור"}
+            </label>
+            <input
+              type="color"
+              value={color}
+              onChange={(event) => setColor(event.target.value)}
+              onBlur={async () => {
+                await handleEdit(platform, color);
+                if (colorInputRef.current) {
+                  colorInputRef.current.blur();
+                }
+              }}
+              className="h-6 w-8 rounded-2xl border-0 border-none p-0"
+            />
+          </div>
         ) : (
           <div>
             <FaEdit
