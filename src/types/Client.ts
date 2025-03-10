@@ -11,4 +11,7 @@ export interface Client {
   website?: string;
   color?: string;
   url?: string;
+  buttonColor?: string;
+  headerColor?: string;
+  textAndIconColor?: string;
 }

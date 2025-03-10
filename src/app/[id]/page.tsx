@@ -16,7 +16,7 @@ import {
 } from "react-icons/fa";
 import { doc } from "firebase/firestore";
 
-function ClientProtfolio() {
+const ClientProtfolio = () => {
   const params = useParams<{ id: string }>();
   const { getClient } = useClientContext();
   const [client, setClient] = useState<Client | null>(null);
@@ -27,8 +27,6 @@ function ClientProtfolio() {
       .then((data) => {
         setClient(data);
         setLoading(false);
-        console.log(data?.color);
-
         document.body.style.backgroundColor = data?.color || "#202020";
       })
       .catch((error) => {
@@ -37,55 +35,55 @@ function ClientProtfolio() {
       });
   }, []);
 
-  //   useEffect(() => {
-  //     if (client?.color) {
-  //       document.body.style.backgroundColor = client.color;
-  //       document.body.style.transition = "background-color 0.5s";
-  //       // Temporarily remove overflow: hidden to see if it affects the background color change
-  //       // document.body.style.overflow = "hidden";
-  //     }
-  //   }, [client]);
-
   const iconMapping: { [key: string]: { icon: JSX.Element; label: string } } = {
     facebook: {
-      icon: <FaFacebook className="text-[#F55274]" size={32} />,
+      icon: (
+        <FaFacebook style={{ color: client?.textAndIconColor }} size={32} />
+      ),
       label: "פייסבוק",
     },
     instagram: {
-      icon: <FaInstagram className="text-[#F55274]" size={32} />,
+      icon: (
+        <FaInstagram style={{ color: client?.textAndIconColor }} size={32} />
+      ),
       label: "אינסטגרם",
     },
     linkedin: {
-      icon: <FaLinkedin className="text-[#F55274]" size={32} />,
+      icon: (
+        <FaLinkedin style={{ color: client?.textAndIconColor }} size={32} />
+      ),
       label: "לינקדאין",
     },
     tiktok: {
-      icon: <FaTiktok className="text-[#F55274]" size={32} />,
+      icon: <FaTiktok style={{ color: client?.textAndIconColor }} size={32} />,
       label: "טיקטוק",
     },
     whatsapp: {
-      icon: <FaWhatsapp className="text-[#F55274]" size={32} />,
+      icon: (
+        <FaWhatsapp style={{ color: client?.textAndIconColor }} size={32} />
+      ),
       label: "וואטסאפ",
     },
     youtube: {
-      icon: <FaYoutube className="text-[#F55274]" size={32} />,
+      icon: <FaYoutube style={{ color: client?.textAndIconColor }} size={32} />,
       label: "יוטיוב",
     },
     twitter: {
-      icon: <FaTwitter className="text-[#F55274]" size={32} />,
+      icon: <FaTwitter style={{ color: client?.textAndIconColor }} size={32} />,
       label: "טוויטר",
     },
     website: {
-      icon: <FaReact className="text-[#F55274]" size={32} />,
+      icon: <FaReact style={{ color: client?.textAndIconColor }} size={32} />,
       label: "אתר",
     },
   };
 
   if (loading) {
     return (
-      <div className="flex min-h-screen items-center justify-center">
+      <div className="flex items-center justify-center min-h-screen">
         <p
-          className={`${rubikFont.className} text-3xl font-black text-gray-800`}
+          className={`${rubikFont.className} text-3xl font-black`}
+          style={{ color: client?.headerColor }}
         >
           טוען...
         </p>
@@ -95,30 +93,32 @@ function ClientProtfolio() {
 
   return (
     <div
-      className={`custom-overlay relative min-h-screen content-center bg-cover bg-center px-3 bg-blend-overlay`}
+      className="relative content-center min-h-screen px-3 bg-center bg-cover custom-overlay bg-blend-overlay"
       style={{
         backgroundColor: client?.color || "black",
       }}
     >
-      <main className="rounded-3xl bg-gray-100 px-3 py-6 shadow-xl">
+      <main className="px-3 py-6 bg-gray-100 shadow-xl rounded-3xl">
         <h1
           className={`${rubikFont.className} text-center text-4xl font-black`}
+          style={{ color: client?.headerColor }}
         >
           עמודי הסושיאל של{" "}
-          <span className="text-[#3521AB]">{client?.name}</span>
+          <span style={{ color: client?.headerColor }}>{client?.name}</span>
         </h1>
         <h2
           className={`${rubikFont.className} mt-2 text-center text-xl font-normal`}
+          style={{ color: client?.headerColor }}
         >
           לחצו והצטרפו לעמודים הרשמיים שלי!
         </h2>
 
-        <ul className="mt-8 flex flex-row flex-wrap items-center justify-center gap-3 pl-2">
+        <ul className="flex flex-row flex-wrap items-center justify-center gap-3 pl-2 mt-8">
           {client &&
             Object.entries(client)
               .filter(
                 ([key, value]) =>
-                  value !== "" && key !== "name" && key !== "color",
+                  value !== "" && key !== "name" && key !== "color" && key !== "buttonColor" && key !== "headerColor" && key !== "textAndIconColor",
               )
               .map(([key, value], index) => (
                 <li
@@ -127,14 +127,27 @@ function ClientProtfolio() {
                 >
                   {iconMapping[key] && (
                     <button className="w-[100%] rounded-md bg-[#202020]">
-                      <span className="block w-[100%] -translate-x-2 -translate-y-2 items-center justify-center rounded-md border-black bg-[#3521AB] px-4 py-2 text-xl transition-all hover:-translate-y-3 active:translate-x-0 active:translate-y-0">
+                      <span
+                        className="block w-[100%] -translate-x-2 -translate-y-2 items-center justify-center rounded-md border-black px-4 py-2 text-xl transition-all hover:-translate-y-3 active:translate-x-0 active:translate-y-0"
+                        style={{ backgroundColor: client?.buttonColor }}
+                      >
                         <a
                           target="_blank"
                           href={value}
                           className="flex flex-row items-center gap-4"
                         >
-                          {iconMapping[key].icon}
-                          <span className="text-gray-100 capitalize">
+                          <span
+                            style={{
+                              color: client?.textAndIconColor,
+                            }}
+                          >
+                            {iconMapping[key].icon}
+                          </span>
+
+                          <span
+                            className="text-gray-100 capitalize"
+                            style={{ color: client?.textAndIconColor }}
+                          >
                             {iconMapping[key].label}
                           </span>
                         </a>
@@ -147,6 +160,6 @@ function ClientProtfolio() {
       </main>
     </div>
   );
-}
+};
 
 export default ClientProtfolio;

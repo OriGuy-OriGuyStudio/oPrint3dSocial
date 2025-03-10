@@ -26,6 +26,9 @@ interface ManageClientFormInputProps {
       color?: string | undefined;
       type?: string | undefined;
       url?: string | undefined;
+      buttonColor?: string | undefined;
+      headerColor?: string | undefined;
+      textAndIconColor?: string | undefined;
     },
     undefined
   >;
@@ -41,7 +44,11 @@ interface ManageClientFormInputProps {
     | "youtube"
     | "website"
     | "color"
-    | "url";
+    | "url"
+    | "buttonColor"
+    | "headerColor"
+    | "textAndIconColor";
+
   type?: string;
 }
 

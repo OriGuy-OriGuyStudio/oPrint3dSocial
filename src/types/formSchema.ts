@@ -65,4 +65,7 @@ export const formSchema = z.object({
     .optional()
     .or(z.string()),
   color: z.string().optional(),
+  buttonColor: z.string().optional(),
+  headerColor: z.string().optional(),
+  textAndIconColor: z.string().optional(),
 });

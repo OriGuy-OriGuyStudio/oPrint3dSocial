@@ -110,6 +110,25 @@ function ManageClientAddClientForm() {
           name="color"
           type="color"
         />
+        <ManageClientFormInput
+          control={form.control}
+          label="צבע כפתורים"
+          name="buttonColor"
+          type="color"
+        />
+        <ManageClientFormInput
+          control={form.control}
+          label="צבע כותרות"
+          name="headerColor"
+          type="color"
+        />
+        <ManageClientFormInput
+          control={form.control}
+          label="צבע מלל בכפתור + אייקון"
+          name="textAndIconColor"
+          type="color"
+        />
+
         <Button
           className={`mt-4 flex w-full items-center justify-center rounded-lg bg-indigo-500 px-4 py-2 text-gray-100 shadow-md shadow-indigo-300 ${rubikFont.className} font-extrabold`}
           type="submit"

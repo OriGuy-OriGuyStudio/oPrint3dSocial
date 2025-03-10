@@ -50,7 +50,10 @@ function ClientCollapseDetails({
             <p className="">{data}</p>
           </div>
         </div>
-        {platform === "color" ? (
+        {platform === "color" ||
+        platform === "textAndIconColor" ||
+        platform === "headerColor" ||
+        platform === "buttonColor" ? (
           <input
             type="color"
             value={color}

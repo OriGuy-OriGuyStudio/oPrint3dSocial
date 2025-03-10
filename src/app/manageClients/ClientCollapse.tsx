@@ -67,7 +67,7 @@ function ClientCollapse({ client }: ClientCollapseProps) {
   };
 
   return client.map((client, index) => (
-    <div key={index} className="border-b-2 py-3">
+    <div key={index} className="py-3 border-b-2">
       <Collapsible
         open={openIndex === index}
         onOpenChange={() => handleToggle(index)}
@@ -84,7 +84,7 @@ function ClientCollapse({ client }: ClientCollapseProps) {
             openIndex === index ? "max-h-screen" : "max-h-0"
           }`}
         >
-          <ul className="mt-3 flex flex-col items-end">
+          <ul className="flex flex-col items-end mt-3">
             <ClientCollapseDetails
               Icon={FaFacebook}
               platform="facebook"
@@ -171,7 +171,37 @@ function ClientCollapse({ client }: ClientCollapseProps) {
               data={
                 client.color === ""
                   ? "אין קישור, ניתן להוסיף"
-                  : (client.color as string)
+                  : ` צבע רקע ${client.color as string}`
+              }
+              clientId={client.id}
+            />
+            <ClientCollapseDetails
+              Icon={FaBrush}
+              platform="buttonColor"
+              data={
+                client.buttonColor === ""
+                  ? "אין קישור, ניתן להוסיף"
+                  : ` צבע כפתור ${client.buttonColor as string}`
+              }
+              clientId={client.id}
+            />
+            <ClientCollapseDetails
+              Icon={FaBrush}
+              platform="headerColor"
+              data={
+                client.headerColor === ""
+                  ? "אין קישור, ניתן להוסיף"
+                  : ` צבע כותרות ${client.headerColor as string}`
+              }
+              clientId={client.id}
+            />
+            <ClientCollapseDetails
+              Icon={FaBrush}
+              platform="textAndIconColor"
+              data={
+                client.textAndIconColor === ""
+                  ? "אין קישור, ניתן להוסיף"
+                  : ` צבע טקסט ואייקון של כפתור ${client.textAndIconColor as string}`
               }
               clientId={client.id}
             />
